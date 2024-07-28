@@ -6,8 +6,6 @@ from database.tasks import main as tasks_main
 from database.models import main as models_main
 from database.json_models import main as json_models_main
 
-from database.queries import queries
-
 
 async def main():
     await tasks_main()
