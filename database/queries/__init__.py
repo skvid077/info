@@ -1,1 +1,1 @@
-from database.queries.queries import User, Task, Variant, Friends, Cash, Admin
+from database.queries.queries import User, Admin, Variant, Task, Cash, Friends

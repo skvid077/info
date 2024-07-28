@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import text
+from sqlalchemy import text, Index
 
 from database.models.base import Base, str_50
 
@@ -15,4 +15,7 @@ class User(Base):
     )
     variants: Mapped[list['Variant']] = relationship(
         back_populates='author'
+    )
+    __table_args__ = (
+        Index('index_id', 'telegram_id', unique=True),
     )

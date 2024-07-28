@@ -2,7 +2,7 @@ from schemas import s_pydantic, s_kwargs
 
 from typing import Unpack, Optional
 
-import queries_to_db
+from database.queries import queries_to_db
 
 
 class User:
@@ -208,6 +208,10 @@ class Task:
         if not await queries_to_db.Task.check(task_id=task_id):
             return None
         return await queries_to_db.Task.check_author(author_id=author_id, task_id=task_id)
+
+    @staticmethod
+    async def nums() -> list[int]:
+        return await queries_to_db.Task.nums()
 
 
 class Admin:

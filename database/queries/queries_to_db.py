@@ -157,14 +157,14 @@ class Friends:
 
     @staticmethod
     async def read() -> dict[int, dict[str, list[int]]]:
-        with open(file='database/json_models/friends.json', mode='r', encoding='utf-8') as f:
+        with open(file='C:\\work\\project\\info\\database\\json_models\\friends.json', mode='r', encoding='utf-8') as f:
             data: dict[int, dict[str, list[int]]] = {int(key): value for key, value in json.loads(f.read()).items()}
         await Friends.write(data)
         return data
 
     @staticmethod
     async def write(data: dict[int, dict[str, list[int]]]):
-        with open(file='database/json_models/friends.json', mode='w', encoding='utf-8') as f:
+        with open(file='C:\\work\\project\\info\\database\\json_models\\friends.json', mode='w', encoding='utf-8') as f:
             f.write(json.dumps(data, indent=4))
 
     @staticmethod
@@ -309,6 +309,13 @@ class Task:
             result = await session.execute(query)
         return result.scalars().one() == author_id
 
+    @staticmethod
+    async def nums() -> list[int]:
+        async with models.async_session_factory() as session:
+            query = select(models.Variant.id)
+            result = await session.execute(query)
+        return result
+
 
 class Admin:
 
@@ -338,13 +345,17 @@ class Variant:
 
     @staticmethod
     async def read() -> dict[int, list[int]]:
-        with open(file='database/json_models/variants.json', mode='r', encoding='utf-8') as f:
+        with open(file='C:\\work\\project\\info\\database\\json_models\\variants.json',
+                  mode='r',
+                  encoding='utf-8') as f:
             data: dict[int, list[int]] = {int(key): value for key, value in json.loads(f.read()).items()}
         return data
 
     @staticmethod
     async def write(data: dict[int, list[int]]):
-        with open(file='database/json_models/variants.json', mode='w', encoding='utf-8') as f:
+        with open(file='C:\\work\\project\\info\\database\\json_models\\variants.json',
+                  mode='w',
+                  encoding='utf-8') as f:
             f.write(json.dumps(data, indent=4))
 
     @staticmethod

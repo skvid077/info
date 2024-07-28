@@ -1,29 +1,60 @@
-from dotenv import load_dotenv
-import os
+from dotenv import dotenv_values
+
+
+class DbError(Exception):
+    def __str__(self):
+        return 'not test'
 
 
 class Settings:
-    __MODE: str
+    __AWS_ACCESS_KEY_ID: str
+    __AWS_SECRET_ACCESS_KEY_ID: str
+
     __DB_HOST: str
     __DB_PORT: str
     __DB_USER: str
     __DB_PASS: str
     __DB_NAME: str
-    __OWNER_ID: int
+
+    __OWNER_ID: str
+
+    __MODE: str
 
     def __init__(self):
-        self.__MODE = os.getenv('MODE')
-        self.__DB_USER = os.getenv('DB_USER')
-        self.__DB_PASS = os.getenv('DB_PASSWORD')
-        self.__DB_HOST = os.getenv('DB_HOST')
-        self.__DB_PORT = os.getenv('DB_PORT')
-        self.__DB_NAME = os.getenv('DB_NAME')
-        self.__OWNER_ID = int(os.getenv('OWNER_ID'))
+        self.__MODE = config.get('MODE')
+        self.__DB_USER = config.get('DB_USER')
+        self.__DB_PASS = config.get('DB_PASS')
+        self.__DB_HOST = config.get('DB_HOST')
+        self.__DB_PORT = config.get('DB_PORT')
+        self.__DB_NAME = config.get('DB_NAME')
+        self.__OWNER_ID = config.get('OWNER_ID')
+        self.__AWS_ACCESS_KEY_ID = config.get('AWS_ACCESS_KEY_ID')
+        self.__AWS_SECRET_ACCESS_KEY_ID = config.get('AWS_SECRET_ACCESS_KEY_ID')
 
     @property
     def database_url(self):
         return f'mysql+aiomysql://{self.__DB_USER}:{self.__DB_PASS}@{self.__DB_HOST}:{self.__DB_PORT}/{self.__DB_NAME}'
 
+    @property
+    def mode(self):
+        return self.__MODE
 
-load_dotenv()
+    @property
+    def owner(self):
+        return self.__OWNER_ID
+
+    @property
+    def aws_access_key_id(self):
+        return self.__AWS_ACCESS_KEY_ID
+
+    @property
+    def aws_secret_access_key_id(self):
+        return self.__AWS_SECRET_ACCESS_KEY_ID
+
+
+# config = dotenv_values('C:\\work\\project\\info\\.env')
+config = dotenv_values('C:\\work\\project\\info\\.test.env')  # test
 settings = Settings()
+# assert settings.mode == 'test', 'not test'
+if settings.mode != 'test':
+    raise DbError

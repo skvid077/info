@@ -1,7 +1,7 @@
 import datetime
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import func, ForeignKey, text
+from sqlalchemy import func, ForeignKey, text, Index
 from schemas import s_enumeration
 
 from database.models.base import Base, str_50
@@ -18,4 +18,7 @@ class Variant(Base):
     at_create: Mapped[datetime.datetime] = mapped_column(nullable=False, server_default=func.now())
     author: Mapped['User'] = relationship(
         back_populates='variants'
+    )
+    __table_args__ = (
+        Index('index_author_id', 'author_id'),
     )
