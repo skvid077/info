@@ -17,7 +17,6 @@ class Task(TypedDict):
     author_id: NotRequired[int]
     num: NotRequired[int]
     ans: NotRequired[str]
-    extend_ans: NotRequired[str]
     verif: NotRequired[bool]
     complexity: NotRequired[Complexity]
     at_create: NotRequired[datetime.datetime]

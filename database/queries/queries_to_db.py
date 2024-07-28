@@ -390,6 +390,13 @@ class Variant:
         return max(result.scalars().all() + [0])
 
     @staticmethod
+    async def nums() -> list[int]:
+        async with models.async_session_factory() as session:
+            query = select(models.Variant.id)
+            result = await session.execute(query)
+        return result.scalars().all()
+
+    @staticmethod
     async def add(**values: Unpack[s_kwargs.Variant]):
         async with models.async_session_factory() as session:
             query = insert(models.Variant).values(

@@ -2,8 +2,6 @@ import asyncio
 
 from database.config import settings
 
-from database.queries import Task
-
 from aiobotocore.session import get_session
 
 
@@ -47,8 +45,11 @@ class S3Client:
 
 
 async def main():
+    from database.queries import Task, Variant
     for num in await Task.nums():
         await s3_client.delete_file(file_url=f'{num}_task.zip')
+    for num in await Variant.nums():
+        await s3_client.delete_file(file_url=f'{num}_variant.zip')
 
 
 s3_client = S3Client(
