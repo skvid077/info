@@ -4,6 +4,8 @@ from typing import Unpack, Optional
 
 from database.queries import queries_to_db
 
+from database.tasks import s3_client
+
 
 class User:
 
@@ -191,6 +193,7 @@ class Task:
         if not await queries_to_db.Task.check(task_id=task_id):
             return None
         await queries_to_db.Task.del_(task_id=task_id)
+        s3_client.delete_file(file_url=f'{task_id}_task.zip')
         return True
 
     @staticmethod
@@ -265,10 +268,15 @@ class Variant:
         return True
 
     @staticmethod
+    async def nums() -> list[int]:
+        return await queries_to_db.Variant.nums()
+
+    @staticmethod
     async def del_(variant_id: int) -> Optional[bool]:
         if not queries_to_db.Variant.check(variant_id=variant_id):
             return None
         await queries_to_db.Variant.del_(variant_id=variant_id)
+        await s3_client.delete_file(file_url=f'{variant_id}_variant.zip')
         return True
 
     @staticmethod
