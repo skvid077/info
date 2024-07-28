@@ -1,8 +1,10 @@
 import asyncio
 
-from database.queries import Task
-from aiobotocore.session import get_session
 from database.config import settings
+
+from database.queries import Task
+
+from aiobotocore.session import get_session
 
 
 class S3Client:
