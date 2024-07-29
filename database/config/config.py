@@ -10,6 +10,8 @@ class Settings:
     __AWS_ACCESS_KEY_ID: str
     __AWS_SECRET_ACCESS_KEY_ID: str
 
+    __TOKEN_TELEGRAM_BOT: str
+
     __DB_HOST: str
     __DB_PORT: str
     __DB_USER: str
@@ -30,6 +32,7 @@ class Settings:
         self.__OWNER_ID = config.get('OWNER_ID')
         self.__AWS_ACCESS_KEY_ID = config.get('AWS_ACCESS_KEY_ID')
         self.__AWS_SECRET_ACCESS_KEY_ID = config.get('AWS_SECRET_ACCESS_KEY_ID')
+        self.__TOKEN_TELEGRAM_BOT = config.get('TOKEN_TELEGRAM_BOT')
 
     @property
     def database_url(self):
@@ -50,6 +53,10 @@ class Settings:
     @property
     def aws_secret_access_key_id(self):
         return self.__AWS_SECRET_ACCESS_KEY_ID
+
+    @property
+    def token_telegram_bot(self):
+        return self.__TOKEN_TELEGRAM_BOT
 
 
 # config = dotenv_values('C:\\work\\project\\info\\.env')
